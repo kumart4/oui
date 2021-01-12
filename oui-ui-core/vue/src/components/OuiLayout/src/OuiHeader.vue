@@ -3,18 +3,21 @@
     <a-breadcrumb :routes="breadcrumbs">
       <template v-slot:itemRender="{ route }">
         <router-link v-if="route.path" :to="route.path">
-          {{ $t(route.title) }}
+          <!-- {{ $t(route.title) }} -->
         </router-link>
-        <span v-else>{{ $t(route.title) }}</span>
+        <!-- <span v-else>{{ $t(route.title) }}</span> -->
       </template>
     </a-breadcrumb>
     <div class="header-right">
       <a-tooltip :title="fullscreen ? $t('Exit Full Screen') : $t('Full Screen')">
-        <a-icon :type="fullscreen ? 'fullscreen-exit' : 'fullscreen'" style="cursor: pointer; margin-top: 8px" @click="fullScreen"/>
+        <a-icon :type="fullscreen ? 'fullscreen-exit' : 'fullscreen'" style="cursor: pointer; margin-top: 8px; color:#12A1E9; fontSize: 22px;" @click="fullScreen"/>
       </a-tooltip>
+      <div>
+        <span style="margin-right:10px; fontSize: 16px; color:#12A1E9;">Device ID : <strong>{{deviceID}}</strong></span>
+      </div>
       <a-dropdown>
         <a href="javascript:void(0)">
-          {{ $t('Language') }}
+          <span style="margin-right:10px; fontSize: 16px; color:#12A1E9;">{{ $t('Language') }}</span>
           <a-icon type="down"/>
         </a>
         <a-menu slot="overlay" @click="onLangClick" :selectedKeys="selectedLangKeys">
@@ -25,10 +28,19 @@
           <a-menu-item key="auto">{{ $t('Automatic') }}</a-menu-item>
         </a-menu>
       </a-dropdown>
+      <!-- <div>
+        <a-icon type="info-circle" style="cursor: pointer; margin-top: 8px; color:#12A1E9; fontSize: 22px;" @click="showModalVerInfo"/>
+        <a-modal wrap-class-name="version-info-modal" title="Version Info" centered :visible="visibleInfo" :closable="false">
+          <template slot="footer">
+            <a-button key="submit" type="primary" @click="handleOkInfo">OK</a-button>
+          </template>
+          <p>{{ versionInfo }}</p>
+        </a-modal>
+      </div> -->
       <a-dropdown>
         <a href="javascript:void(0)">
-          <span>{{ username }}</span>
-          <a-icon type="down"/>
+          <span style="margin-right:10px; fontSize: 16px; color:#12A1E9;">{{ username }}</span>
+          <a-icon type="menu" :style="{ fontSize: '16px' }"/>
         </a>
         <a-menu slot="overlay" @click="onUserClick">
           <a-menu-item key="logout">{{ $t('Logout') }}</a-menu-item>
@@ -46,7 +58,10 @@ export default {
   data () {
     return {
       breadcrumbs: [],
-      username: ''
+      username: '',
+      deviceID: '',
+      versionInfo: '',
+      visibleInfo: false
     }
   },
   computed: {
@@ -56,18 +71,32 @@ export default {
     ...mapState(['lang', 'fullscreen'])
   },
   methods: {
+    showModalVerInfo () {
+      this.visibleInfo = true
+    },
+    handleOkInfo () {
+      this.visibleInfo = false
+    },
     fullScreen () {
       this.$store.commit('toggleFullscreen')
     },
     getBreadCrumbList (route) {
       const homeRoute = this.$router.options.routes.find(r => r.path === '/').children[0]
-      const homeItem = { title: homeRoute.meta.title }
+      // const homeItem = { title: homeRoute.meta.title }
+      const homeItem = {}
+      if (homeRoute && homeRoute.meta && homeRoute.meta.title) {
+        homeItem.title = homeRoute.meta.title
+      } else {
+        homeItem.title = 'Tantiv4'.toString()
+      }
       const matched = route.matched
 
       if (matched.some(item => item.path === '/home')) {
         return [{
-          title: homeRoute.meta.title,
-          breadcrumbName: homeRoute.meta.title
+          // title: homeRoute.meta.title,
+          // breadcrumbName: homeRoute.meta.title
+          title: homeItem.title,
+          breadcrumbName: homeItem.title
         }]
       }
 
@@ -128,7 +157,17 @@ export default {
   created () {
     this.breadcrumbs = this.getBreadCrumbList(this.$route)
 
-    this.username = this.$session.username()
+    // this.username = this.$session.username()
+    // this.username = this.$session.username
+    this.username = sessionStorage.getItem('username')
+
+    fetch('device_id.txt')
+      .then(response => response.text())
+      .then(text => { this.deviceID = text })
+
+    fetch('versionRezrv')
+      .then(response => response.text())
+      .then(text => { this.versionInfo = text })
   }
 }
 </script>
@@ -151,6 +190,12 @@ export default {
     > * {
       margin-right: 20px;
     }
+  }
+}
+
+.version-info-modal {
+  .ant-modal-header {
+    background-color : #05a9e1;
   }
 }
 </style>

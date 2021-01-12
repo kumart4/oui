@@ -62,6 +62,14 @@
     "host": "Must be a hostname or IP address",
     "uci": "Must be a valid UCI identifier",
     "min": "Cannot be less than {min}",
-    "max": "Cannot be greater than {max}"
-  }
+    "max": "Cannot be greater than {max}",
+    "passwordValidator": "Passphrase length is either greater than 64 or less than 8 characters",
+    "ssidValidator": "SSID length is greater than 32 characters"
+  },
+  "Back": "Back",
+  "Next": "Next",
+  "Select Your Language": "Select Your Language",
+  "Set administrator password": "Set administrator password",
+  "Router SSID and Security Configuration": "Router SSID and Security Configuration",
+  "Upgrading...": "Upgrading..."
 }

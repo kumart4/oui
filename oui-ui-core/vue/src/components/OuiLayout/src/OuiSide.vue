@@ -64,7 +64,7 @@ export default {
     },
     onClick (item) {
       if (item.key === this.$route.path) return
-      this.$router.push(item.key)
+      this.$router.push(item.key + '?timestamp=' + new Date().getTime())
     }
   },
   created () {

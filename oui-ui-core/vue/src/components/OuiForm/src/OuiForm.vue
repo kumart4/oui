@@ -6,9 +6,9 @@
         <template #label>
           <span/>
         </template>
-        <div style="float: right">
+        <div style="float: center; padding: 0 0 0 10px;">
           <a-button type="primary" style="margin-right: 10px" @click="apply">{{ $t('Save & Apply') }}</a-button>
-          <a-button type="danger" @click="reset">{{ $t('Reset') }}</a-button>
+          <a-button type="danger" style="margin-left: 10px" @click="reset">{{ $t('Reset') }}</a-button>
         </div>
       </a-form-model-item>
     </slot>
@@ -118,7 +118,14 @@ export default {
             this.load().then(() => {
               this.$spin(false)
               this.$emit('applied')
-              this.reset().then(() => this.$message.success(this.$t('Configuration has been applied')))
+              this.reset().then(() => {
+                this.$message.success(this.$t('Configuration has been applied'))
+                if (document.URL.indexOf('network/wireless') > -1) {
+                  setTimeout(() => {
+                    this.$reconnect(this.$t('Wireless Settings getting Applied...'))
+                  }, 2000)
+                }
+              })
             })
           })
         })

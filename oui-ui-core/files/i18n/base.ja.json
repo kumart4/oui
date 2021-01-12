@@ -62,6 +62,14 @@
     "host": "ホスト名またはIPアドレスでなければならない",
     "uci": "合法的なUCIタグでなければなりません",
     "min": "{min}以下ではない。",
-    "max": "{max}以上ではない。"
-  }
+    "max": "{max}以上ではない。",
+    "passwordValidator": "パスフレーズの長さが64文字を超えるか8文字未満である",
+    "ssidValidator": "SSIDの長さが32文字を超えています"
+  },
+  "Back": "後退",
+  "Next": "歩行者用",
+  "Select Your Language": "言語を選択する",
+  "Set administrator password": "管理者パスワードを設定する",
+  "Router SSID and Security Configuration": "ルーターのSSIDとセキュリティ構成",
+  "Upgrading...": "アップグレード中..."
 }

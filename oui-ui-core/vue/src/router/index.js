@@ -76,7 +76,8 @@ function firstLogin () {
     if (value === null) {
       rpc.call('oui', 'first_login').then(r => {
         sessionStorage.setItem('__oui_first_login', r.first)
-        resolve(r.first)
+        // resolve(r.first)
+        resolve(true)
       })
     } else {
       resolve(value === 'true')

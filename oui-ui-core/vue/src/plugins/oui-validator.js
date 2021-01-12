@@ -140,5 +140,19 @@ export default {
   },
   uci (value) {
     return !!value.match(/^[a-zA-Z0-9_]+$/)
+  },
+  ssidValidator (value) {
+    if (value.length >= 32) {
+      return false
+    } else {
+      return true
+    }
+  },
+  passwordValidator (value) {
+    if (value.length >= 64 || value.length < 8) {
+      return false
+    } else {
+      return true
+    }
   }
 }
