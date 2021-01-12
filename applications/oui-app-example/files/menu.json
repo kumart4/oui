@@ -1,10 +1,10 @@
 {
 	"examples": {
-		"title": "Examples",
+		"title": "Bandwidth control",
 		"index": 90
 	},
 	"examples/example": {
-		"title": "Example",
+		"title": "REZRV",
 		"view": "oui-app-example",
 		"index": 10
 	}
