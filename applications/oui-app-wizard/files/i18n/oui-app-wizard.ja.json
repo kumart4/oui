@@ -5,11 +5,14 @@
     "Next": "歩行者用",
     "Select Your Language": "言語を選択する",
     "Set administrator password": "管理者パスワードを設定する",
+    "Router SSID and Security Configuration": "ルーターのSSIDとセキュリティ構成",
     "Username": "ゆーざめい",
     "Password": "パスワード",
     "Confirmation": "确认",
     "Please enter your password": "暗証番号を入力してください",
     "Please enter your password again": "パスワードを再入力してください",
-    "Inconsistent input password twice!":  "2回のパスワード入力が一致しなかった!"
+    "Inconsistent input password twice!":  "2回のパスワード入力が一致しなかった!",
+    "Save Apply the Changes" : "変更を保存して適用した後、送信ボタンを押してください。",
+    "Do you want to configure SSID and Password" : "SSIDとパスワードを設定しますか"
   }
 }

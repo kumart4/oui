@@ -5,11 +5,14 @@
     "Next": "前进",
     "Select Your Language": "选择语言",
     "Set administrator password": "设置管理员密码",
+    "Router SSID and Security Configuration": "路由器SSID和安全性配置",
     "Username": "用户名",
     "Password": "密码",
     "Confirmation": "确认",
     "Please enter your password": "请输入密码",
     "Please enter your password again": "请再次输入密码",
-    "Inconsistent input password twice!":  "两次密码输入不一致!"
+    "Inconsistent input password twice!":  "两次密码输入不一致!",
+    "Save Apply the Changes" : "保存并应用更改后，请按“提交”按钮。",
+    "Do you want to configure SSID and Password" : "您是否要配置SSID和密码"
   }
 }
