@@ -56,6 +56,7 @@ export default {
         content: this.$t('upgrade.PerformResetContent'),
         onOk: () => {
           this.$rpc.call('system', 'factory').then(() => {
+            sessionStorage.setItem('__oui_first_login', 'true')
             this.$reconnect(this.$t('Rebooting...'))
           })
         }
@@ -113,6 +114,7 @@ export default {
                   okText: this.$t('upgrade.Reboot now'),
                   onOk: () => {
                     this.$system.reboot().then(() => {
+                      sessionStorage.setItem('__oui_first_login', 'true')
                       this.$reconnect(this.$t('Rebooting...'))
                     })
                   }
@@ -155,7 +157,11 @@ export default {
             onOk: () => {
               const keep = document.getElementById('upgrade-firmware-keep').checked
               this.startUpgrade(keep).then(() => {
-                this.$reconnect(this.$t('upgrade.Upgrading'))
+                if (keep === false) {
+                  sessionStorage.setItem('__oui_first_login', 'true')
+                }
+                this.$reconnect(this.$t('Upgrading...'))
+                // this.$reconnect(this.$t('upgrade.Upgrading'))
               })
             },
             onCancel: () => this.cleanUpgrade()

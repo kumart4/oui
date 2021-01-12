@@ -7,7 +7,7 @@
     "RestoreDesc": "To restore configuration files, you can upload a previously generated backup archive here.",
     "Select File": "Select File",
     "Flash new firmware image": "Flash new firmware image",
-    "UpgradeDesc": "Upload a sysupgrade-compatible image here to replace the running firmware. Check \"Keep settings\" to retain the current configuration (requires an OpenWrt compatible firmware image).",
+    "UpgradeDesc": "Upload a sysupgrade-compatible image here to replace the running firmware. Check \"Keep settings\" to retain the current configuration.",
     "Really reset all changes?": "Really reset all changes?",
     "PerformResetContent": "This will reset the system to its initial configuration, all changes made since the initial flash will be lost!",
     "Size": "Size",
