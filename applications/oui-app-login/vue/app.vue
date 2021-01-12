@@ -1,4 +1,13 @@
 <template>
+
+  <div>
+    <div class="header">
+      <div class="center">
+        <img src="/icons/REZRV-Logo.png"/>
+        <p style="font-size: 30px;">ROUTER LOGIN</p>
+      </div>
+    </div>
+
   <div>
     <a-spin size="large" class="oui-login" :spinning="spinning">
       <a-card :title="$t('login.Authorization Required')">
@@ -19,10 +28,23 @@
         </a-form-model>
       </a-card>
     </a-spin>
+    </div>
+
+    <div style = " width: 100%;
+    top: 89%;
+    height: 11%;
+    position: fixed;
+    background-color: #05a9e1; ">
     <div class="footer">
-      <a href="https://github.com/zhaojh329/oui" target="_blank">Powered by oui</a>
+        <a target="_blank" style="color: #ffffff;">Powered By</a>
+      </div>
+
+      <div class="footer_1">
+        <img src="/icons/Tantiv-Logo.png" width="170" height="40" />
     </div>
   </div>
+  </div>
+
 </template>
 
 <script>
@@ -56,19 +78,40 @@ export default {
 </script>
 
 <style>
+
+.header {
+  top: 2%;
+  left: 30%;
+  position: fixed;
+  width: 41%;
+}
+
+.center {
+  text-align: center;
+}
+
 .oui-login {
   width: 500px;
-  top: 50%;
+  top: 55%;
   left: 50%;
   position: fixed;
   transform: translate(-50%, -50%);
 }
 
 .footer {
-  font-size: 20px;
+  font-size: 25px;
+  position: fixed;
+  bottom: 50px;
+  right: 20px;
+  color: #ffffff;
+}
+
+.footer_1 {
+  font-size: 25px;
   position: fixed;
   bottom: 10px;
-  right: 20px;
-  color: blue;
+  right: 2px;
+  color: white;
 }
+
 </style>
