@@ -21,15 +21,6 @@
       </div>
       <div style="clear: both">
         <div v-show="tab === 'devices'">
-          <a-card :title="$t('home.Online devices')" style="margin-bottom: 20px">
-            <a-table :columns="devicesColumns" :data-source="devices"/>
-          </a-card>
-          <a-card :title="$t('home.Active DHCP Leases')" style="margin-bottom: 20px">
-            <a-table :columns="leasesColumns" :data-source="leases"/>
-          </a-card>
-          <a-card :title="$t('home.Active DHCPv6 Leases')" style="margin-bottom: 20px">
-            <a-table :columns="leases6Columns" :data-source="leases6"/>
-          </a-card>
           <a-card :title="$t('home.Associated Stations')" style="margin-bottom: 20px">
             <a-table :columns="assoclistColumns" :data-source="assoclist">
               <template #signal="record">
@@ -44,6 +35,19 @@
               </template>
             </a-table>
           </a-card>
+          <a-card :title="$t('home.Online devices')" style="margin-bottom: 20px">
+            <a-table :columns="devicesColumns" :data-source="devices"/>
+          </a-card>
+          <a-card :title="$t('home.Active DHCP Leases')" style="margin-bottom: 20px">
+            <a-table :columns="leasesColumns" :data-source="leases"/>
+          </a-card>
+          <a-collapse>
+            <a-collapse-panel :header="$t('home.Active DHCPv6 Leases')" style="margin-bottom: 20px; font-size: 120%;">
+              <a-card>
+                <a-table :columns="leases6Columns" :data-source="leases6"/>
+              </a-card>
+            </a-collapse-panel>
+          </a-collapse>
         </div>
         <div v-show="tab === 'router'">
           <div style="display: flex; justify-content: space-around;">
@@ -117,7 +121,12 @@ export default {
   },
   methods: {
     leasetime (expires) {
-      return expires <= 0 ? this.$t('home.expired') : '%t'.format(expires)
+      if (expires === undefined) {
+        return 'Unlimited'
+      } else {
+        return expires <= 0 ? this.$t('home.expired') : '%t'.format(expires)
+      }
+      // return expires <= 0 ? this.$t('home.expired') : '%t'.format(expires)
     },
     wifirate (sta, rx) {
       const rate = rx ? sta.rx : sta.tx
@@ -169,9 +178,16 @@ export default {
     },
     update () {
       this.$system.getInfo().then(({ hostname, model, system, release, kernel, localtime, uptime, memory }) => {
+        var finalModel = ''
+        if (model.toLowerCase().indexOf('youhua') > -1) {
+          finalModel = String('Netsmart Router NSAC1200RZ')
+        } else {
+          finalModel = model
+        }
         this.sysinfo = [
           [this.$t('Hostname'), hostname],
-          [this.$t('home.Model'), model],
+          [this.$t('home.Model'), finalModel],
+          // [this.$t('home.Model'), model],
           [this.$t('home.Architecture'), system],
           [this.$t('home.Firmware Version'), release.revision],
           [this.$t('home.Kernel Version'), kernel],
