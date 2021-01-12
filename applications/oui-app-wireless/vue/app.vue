@@ -1,43 +1,29 @@
 <template>
   <oui-form uci-config="wireless">
     <a-tabs v-if="radios.length > 0" name="top" :animated="false">
-      <a-tab-pane v-for="radio in radios" :key="radio.name" :tab="radio.name + ` (${radio.hardware})`">
-        <oui-named-section :name="radio.name" v-slot="{ s }" :card="false">
-          <a-tabs>
-            <a-tab-pane :tab="$t('General Settings')" key="general">
+      <a-tab-pane v-for="radio in radios" :key="radio.newName" :tab="radio.newName">
+        <oui-typed-section type="wifi-iface" :filter="(s => s.device.toLowerCase() === radio.name.toLowerCase())" v-slot="{ s }"
+                         :teasers="['ssid']" :collapsible="false">
+          <div style="font-size: 140%;">Current SSID : <strong>{{s.ssid}}</strong></div>
+          <!-- <a-tabs> -->
+            <!-- <a-tab-pane :tab="$t('General Settings')" key="general"> -->
               <oui-form-item-switch :uci-section="s" :label="$t('wireless.Disabled')" name="disabled"/>
-              <oui-form-item-select :uci-section="s" :label="$t('wireless.Mode')" name="hwmode" :options="radio.hwmodes" required/>
-              <oui-form-item-select :uci-section="s" :label="$t('wireless.Band')" name="htmode" :options="radio.htmodes"/>
-              <oui-form-item-select :uci-section="s" :label="$t('wireless.Channel')" name="channel" :options="radio.channels" :initial="radio.channel" required :placeholder="$t('wireless.auto')"/>
-              <oui-form-item-select :uci-section="s" :label="$t('wireless.Transmit Power')" name="txpower" :options="radio.txpowerlist" :initial="radio.txpower" required/>
-            </a-tab-pane>
-            <a-tab-pane :tab="$t('Advanced Settings')" key="advanced">
-              <oui-form-item-select :uci-section="s" :label="$t('wireless.Country Code')" name="country" :options="radio.countrylist" :initial="radio.country" required/>
-              <oui-form-item-input :uci-section="s" :label="$t('wireless.Distance Optimization')" name="distance" rules="uinteger"/>
-            </a-tab-pane>
-          </a-tabs>
-        </oui-named-section>
-        <oui-typed-section :title="$t('wireless.Interface')" type="wifi-iface" :filter="(s => s.device === radio.name)" addremove v-slot="{ s }"
-                         :teasers="['disabled', 'mode', 'ssid', 'network', 'encryption']" :add="self => AddIface(self, radio.name)">
-          <a-tabs>
-            <a-tab-pane :tab="$t('General Settings')" key="general">
-              <oui-form-item-switch :uci-section="s" :label="$t('wireless.Disabled')" name="disabled"/>
-              <oui-form-item-select :uci-section="s" :label="$t('wireless.Mode')" name="mode" required :options="modes"/>
-              <oui-form-item-input :uci-section="s" label="SSID" name="ssid" required/>
-              <oui-form-item-select :uci-section="s" :label="$t('Network')" name="network" :options="interfaces"/>
-              <oui-form-item-switch :uci-section="s" :label="$t('wireless.Hide ESSID')" name="hidden" depend="mode == 'ap'"/>
+              <!-- <oui-form-item-select :uci-section="s" :label="$t('wireless.Mode')" name="mode" required :options="modes"/> -->
+              <oui-form-item-input :uci-section="s" label="SSID" name="ssid" rules="ssidValidator" required/>
+              <!-- <oui-form-item-select :uci-section="s" :label="$t('Network')" name="network" :options="interfaces"/> -->
+              <!-- <oui-form-item-switch :uci-section="s" :label="$t('wireless.Hide ESSID')" name="hidden" depend="mode == 'ap'"/> -->
               <oui-form-item-switch :uci-section="s" :label="$t('wireless.WMM Mode')" name="wmm" depend="mode == 'ap'" initial/>
-            </a-tab-pane>
-            <a-tab-pane :tab="$t('wireless.Wireless Security')" key="security">
+            <!-- </a-tab-pane> -->
+            <!-- <a-tab-pane :tab="$t('wireless.Wireless Security')" key="security"> -->
               <oui-form-item-select :uci-section="s" :label="$t('wireless.Encryption')" name="encryption" :options="encryptions" initial="none" :load="loadEncr" :save="saveEncr"/>
               <oui-form-item-select :uci-section="s" :label="$t('wireless.Cipher')" name="cipher" depend="encryption != 'none'" :options="ciphers" initial="auto" :load="loadCipher" :save="saveCipher"/>
-              <oui-form-item-input :uci-section="s" :label="$t('wireless.Passphrase')" name="key" depend="encryption != 'none'" password/>
-            </a-tab-pane>
-            <a-tab-pane :tab="$t('wireless.MAC-Filter')" key="mac-filter">
+              <oui-form-item-input :uci-section="s" :label="$t('wireless.Passphrase')" name="key" depend="encryption != 'none'" rules="passwordValidator" password/>
+            <!-- </a-tab-pane> -->
+            <!-- <a-tab-pane :tab="$t('wireless.MAC-Filter')" key="mac-filter">
               <oui-form-item-select :uci-section="s" :label="$t('wireless.Mode')" name="macfilter" :options="macfilters" depend="mode == 'ap'"/>
               <oui-form-item-list :uci-section="s" :label="$t('wireless.MAC-List')" name="maclist" depend="macfilter == 'allow' || macfilter == 'deny'" rules="macaddr"/>
-            </a-tab-pane>
-          </a-tabs>
+            </a-tab-pane> -->
+          <!-- </a-tabs> -->
         </oui-typed-section>
       </a-tab-pane>
     </a-tabs>
@@ -137,39 +123,82 @@ export default {
         Promise.all(promises).then(rs => {
           const channels = [['auto', this.$t('wireless.Automatic')]]
           const info = rs[0]
+          // const freqlist = rs[1].results
           const freqlist = rs[1]
           const txpowerlist = []
           const countrylist = []
 
-          freqlist.forEach(f => {
-            if (f.restricted) { return }
-            channels.push([f.channel, `${f.channel} (${f.mhz} MHz)`])
-          })
+          if (freqlist) {
+            freqlist.forEach(f => {
+              if (f.restricted) { return }
+              channels.push([f.channel, `${f.channel} (${f.mhz} MHz)`])
+            })
+          }
 
-          rs[2].forEach(tx => {
-            txpowerlist.push([tx.dbm, `${tx.dbm} dBm (${tx.mw} mW)`])
-          })
+          if (rs[2] /* && rs[2].results */) {
+            // rs[2].results.forEach(c => {
+            rs[2].forEach(tx => {
+              txpowerlist.push([tx.dbm, `${tx.dbm} dBm (${tx.mw} mW)`])
+            })
+          }
 
-          rs[3].forEach(c => {
-            countrylist.push([c.ccode, `${c.ccode} - ${c.name}`])
-          })
+          if (rs[3] /* && rs[3].results */) {
+            rs[3].forEach(c => {
+            // rs[3].results.forEach(c => {
+              // countrylist.push([c.code, `${c.code} - ${c.country}`])
+              countrylist.push([c.ccode, `${c.ccode} - ${c.name}`])
+            })
+          }
 
           const hwmodes = ['11g']
 
-          if (info.hwmodes.indexOf('a') > -1 || info.hwmodes.indexOf('ac') > -1) { hwmodes.push('11a') }
+          if (info && info.hwmodes) {
+            if (info.hwmodes.indexOf('a') > -1 || info.hwmodes.indexOf('ac') > -1) { hwmodes.push('11a') }
 
-          this.radios.push({
-            name: device,
-            channel: info.channel,
-            txpower: info.txpower,
-            country: info.country,
-            hardware: info.hardware.name,
-            hwmodes: hwmodes,
-            htmodes: info.htmodes,
-            channels: channels,
-            txpowerlist: txpowerlist,
-            countrylist: countrylist
-          })
+            var newNameVal = ''
+            if (info.channel > 13) {
+              newNameVal = 'SSID-' + device.split('radio')[1] + ' (5 GHz)'
+            } else {
+              newNameVal = 'SSID-' + device.split('radio')[1] + ' (2.4 GHz)'
+            }
+
+            var objRadioPush = {
+              name: device.charAt(0).toUpperCase() + device.slice(1),
+              // name: device,
+              channel: info.channel,
+              txpower: info.txpower,
+              country: info.country,
+              hardware: info.hardware.name,
+              hwmodes: hwmodes,
+              htmodes: info.htmodes,
+              channels: channels,
+              txpowerlist: txpowerlist,
+              countrylist: countrylist,
+              newName: newNameVal
+            }
+
+            console.log('s = ', s)
+            console.log('objRadioPush = ', objRadioPush)
+
+            // if (this.radios.length === 0) {
+            //   // console.log('this.radios length (0) = ', this.radios.length)
+            //   this.radios.push(objRadioPush)
+            // } else {
+            //   // console.log('this.radios length(not 0) = ', this.radios.length)
+            //   var checkisthere = false
+            //   for (var i = 0; i < this.radios.length; i++) {
+            //     if (this.radios[i].newName === objRadioPush.newName) {
+            //       // console.log('is there')
+            //       checkisthere = true
+            //       break
+            //     }
+            //   }
+            //   if (checkisthere === false) {
+            //     this.radios.push(objRadioPush)
+            //   }
+            // }
+            this.radios.push(objRadioPush)
+          }
 
           radiosNum--
 
