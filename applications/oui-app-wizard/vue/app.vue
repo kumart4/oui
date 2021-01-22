@@ -170,19 +170,19 @@ export default {
       accessSSIDList: false
     }
   },
-  created () {
-    var lang = 'en'
-    this.$store.commit('setLang', lang)
+  // created () {
+  //   var lang = 'en'
+  //   this.$store.commit('setLang', lang)
 
-    if (!this.$i18n.loaded(lang)) {
-      this.$rpc.call('oui', 'load_locales', { locale: lang }).then(locales => {
-        locales.forEach(locale => this.$i18n.mergeLocaleMessage(lang, locale))
-        this.$i18n.locale = lang
-      })
-    } else {
-      this.$i18n.locale = lang
-    }
-  },
+  //   if (!this.$i18n.loaded(lang)) {
+  //     this.$rpc.call('oui', 'load_locales', { locale: lang }).then(locales => {
+  //       locales.forEach(locale => this.$i18n.mergeLocaleMessage(lang, locale))
+  //       this.$i18n.locale = lang
+  //     })
+  //   } else {
+  //     this.$i18n.locale = lang
+  //   }
+  // },
   methods: {
     filterCheck (s, radio) {
       if (s.device === radio.name && (s.disabled === undefined || s.disabled === '0')) {
