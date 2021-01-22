@@ -8,7 +8,7 @@
       <div>
         <div @click="tab = 'devices'" style="display:inline;" class="tab-tilte">
           <img src="/icons/devices.png"/>
-          <div :class="{active: tab === 'devices'}">{{ $t('home.Terminal devices') + `(${devices.length})` }}</div>
+          <div :class="{active: tab === 'devices'}">{{ $t('home.Terminal devices') + `(${assoclist.length})` }}</div>
         </div>
         <div @click="tab = 'router'" style="display:inline;" class="tab-tilte">
           <img src="/icons/router.png"/>
