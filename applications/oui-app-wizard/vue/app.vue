@@ -78,8 +78,8 @@
         </a-form-model>
       </a-card>
       <div class="steps-action">
-        <a-button type="primary" :disabled="current === 0" @click="prev">{{ $t('Back') }}</a-button>
-        <a-button type="primary" v-if="current < steps.length - 1" @click="next">{{ $t('Next') }}</a-button>
+        <a-button type="primary" :disabled="current === 0" @click="prev">{{ $t('wizard.Back') }}</a-button>
+        <a-button type="primary" v-if="current < steps.length - 1" @click="next">{{ $t('wizard.Next') }}</a-button>
         <a-button type="primary" v-if="current === steps.length - 1" @click="submit">{{ $t('wizard.Submit') }}</a-button>
       </div>
     </div>
@@ -123,9 +123,9 @@ export default {
     return {
       current: 0,
       steps: [
-        'Select Your Language',
-        'Set administrator password',
-        'Router SSID and Security Configuration'
+        'wizard.Select Your Language',
+        'wizard.Set administrator password',
+        'wizard.Router SSID and Security Configuration'
       ],
       form: {
         lang: 'en',
