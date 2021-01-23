@@ -44,7 +44,12 @@ export default {
       if (lang === 'zh') lang = 'zh-cn'
 
       this.$rpc.call('oui', 'load_locales', { locale: lang }).then(locales => {
-        locales.forEach(locale => this.$i18n.mergeLocaleMessage(lang, locale))
+        console.log('locales = ', locales)
+        if (Array.isArray(locales) && locales.length > 0) {
+          console.log('locales one more time = ', locales)
+          locales.forEach(locale => this.$i18n.mergeLocaleMessage(lang, locale))
+        }
+        // locales.forEach(locale => this.$i18n.mergeLocaleMessage(lang, locale))
         this.$i18n.locale = lang
         this.loaded = true
       })
