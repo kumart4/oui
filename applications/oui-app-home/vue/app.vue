@@ -35,9 +35,9 @@
               </template>
             </a-table>
           </a-card>
-          <a-card :title="$t('home.Online devices')" style="margin-bottom: 20px">
+          <!-- <a-card :title="$t('home.Online devices')" style="margin-bottom: 20px">
             <a-table :columns="devicesColumns" :data-source="devices"/>
-          </a-card>
+          </a-card> -->
           <a-card :title="$t('home.Active DHCP Leases')" style="margin-bottom: 20px">
             <a-table :columns="leasesColumns" :data-source="leases"/>
           </a-card>
