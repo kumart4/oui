@@ -25,7 +25,7 @@
           <a-menu-item key="zh-cn">简体中文</a-menu-item>
           <a-menu-item key="zh-tw">繁体中文</a-menu-item>
           <a-menu-item key="ja">日本語</a-menu-item>
-          <a-menu-item key="auto">{{ $t('Automatic') }}</a-menu-item>
+          <!-- <a-menu-item key="auto">{{ $t('Automatic') }}</a-menu-item> -->
         </a-menu>
       </a-dropdown>
       <!-- <div>
