@@ -43,8 +43,9 @@
           <a-icon type="menu" :style="{ fontSize: '16px' }"/>
         </a>
         <a-menu slot="overlay" @click="onUserClick">
-          <a-menu-item key="logout">{{ $t('Logout') }}</a-menu-item>
+          <a-menu-item key="advanced">{{ $t('Advanced') }}</a-menu-item>
           <a-menu-item key="reboot">{{ $t('Reboot') }}</a-menu-item>
+          <a-menu-item key="logout">{{ $t('Logout') }}</a-menu-item>
         </a-menu>
       </a-dropdown>
     </div>
@@ -146,6 +147,8 @@ export default {
             })
           }
         })
+      } else if (action === 'advanced') {
+        window.open('http://10.3.12.1:8083/')
       }
     }
   },
