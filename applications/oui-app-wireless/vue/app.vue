@@ -4,10 +4,24 @@
       <a-tab-pane v-for="radio in radios" :key="radio.newName" :tab="radio.newName">
         <oui-typed-section type="wifi-iface" :filter="(s => s.device.toLowerCase() === radio.name.toLowerCase())" v-slot="{ s }"
                          :teasers="['ssid']" :collapsible="false">
-          <div style="font-size: 140%;">Current SSID : <strong>{{s.ssid}}</strong></div>
+          <div style="display: flex; flex-direction: row; justify-content: space-between; ">
+            <div style="font-size: 140%;">Current SSID : <strong>{{s.ssid}}</strong></div>
+            <div style="display: flex; flex-direction: row; justify-content: space-between;">
+              <div style="font-size: 140%;">Enabled : </div>
+              <div v-if="s.disabled !== '1'" style="display: flex; align-items: center; padding-left:8px;">
+                <a-switch :id="s.ssid" :name="s['.name']" :value="s.device" default-checked @change="onChangeEnabled"/>
+              </div>
+              <div v-else style="display: flex; align-items: center; padding-left:8px;">
+                <a-switch :id="s.ssid" :name="s['.name']" :value="s.device" @change="onChangeEnabled"/>
+              </div>
+            </div>
+          </div>
+          <br/>
+
+          <!-- <div style="font-size: 140%;">Current SSID : <strong>{{s.ssid}}</strong></div> -->
           <!-- <a-tabs> -->
             <!-- <a-tab-pane :tab="$t('General Settings')" key="general"> -->
-              <oui-form-item-switch :uci-section="s" :label="$t('wireless.Disabled')" name="disabled"/>
+              <!-- <oui-form-item-switch :uci-section="s" :label="$t('wireless.Disabled')" name="disabled"/> -->
               <!-- <oui-form-item-select :uci-section="s" :label="$t('wireless.Mode')" name="mode" required :options="modes"/> -->
               <oui-form-item-input :uci-section="s" label="SSID" name="ssid" rules="ssidValidator" required/>
               <!-- <oui-form-item-select :uci-section="s" :label="$t('Network')" name="network" :options="interfaces"/> -->
@@ -67,6 +81,18 @@ export default {
     loadEncr (self) {
       const [v] = (this.$uci.get('wireless', self.sid, 'encryption') || '').split('+')
       return v
+    },
+    onChangeEnabled (checked, event) {
+      console.log(`a-switch to ${checked} `)
+      // console.log('a-switch to event id = ', event.target.id)
+      // console.log('a-switch to event value = ', event.target.value)
+      console.log('a-switch to event name = ', event.target.name)
+
+      if (checked) {
+        this.$uci.set('wireless', event.target.name, 'disabled', '0')
+      } else {
+        this.$uci.set('wireless', event.target.name, 'disabled', '1')
+      }
     },
     loadCipher (self) {
       let v = (this.$uci.get('network', self.sid, 'encryption') || '').split('+')
