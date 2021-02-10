@@ -9,6 +9,7 @@
     "Username": "ゆーざめい",
     "Password": "パスワード",
     "Confirmation": "确认",
+    "password length must be less then 64 characters" : "パスワードの長さは64文字未満である必要があります",
     "Please enter your password": "暗証番号を入力してください",
     "Please enter your password again": "パスワードを再入力してください",
     "Inconsistent input password twice!":  "2回のパスワード入力が一致しなかった!",

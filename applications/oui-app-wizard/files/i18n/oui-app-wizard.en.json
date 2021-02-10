@@ -9,6 +9,7 @@
     "Username": "Username",
     "Password": "Password",
     "Confirmation": "Confirmation",
+    "password length must be less then 64 characters" : "password length must be less then 64 characters",
     "Please enter your password": "Please enter your password",
     "Please enter your password again": "Please enter your password again",
     "Inconsistent input password twice!": "Inconsistent input password twice!",

@@ -79,7 +79,7 @@
       </a-card>
       <div class="steps-action">
         <a-button type="primary" :disabled="current === 0" @click="prev">{{ $t('Back') }}</a-button>
-        <a-button type="primary" v-if="current === 0 || ( current < steps.length - 1 && form.password !== '' && form.password === form.confirm )" @click="next">{{ $t('Next') }}</a-button>
+        <a-button type="primary" v-if="current === 0 || ( current < steps.length - 1 && form.password !== '' && form.password.length <= 64 && form.password === form.confirm )" @click="next">{{ $t('Next') }}</a-button>
         <a-button type="primary" v-if="current === steps.length - 1" @click="submit">{{ $t('wizard.Submit') }}</a-button>
       </div>
     </div>
@@ -104,6 +104,8 @@ export default {
     const validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error(this.$t('wizard.Please enter your password')))
+      } else if (value.length > 64) {
+        callback(new Error(this.$t('wizard.password length must be less then 64 characters')))
       } else {
         if (this.form.confirm !== '') { this.$refs.form.validateField('confirm') }
         callback()
@@ -113,6 +115,8 @@ export default {
     const validatorConfirm = (rule, value, callback) => {
       if (value === '') {
         callback(new Error(this.$t('wizard.Please enter your password again')))
+      } else if (value.length > 64) {
+        callback(new Error(this.$t('wizard.password length must be less then 64 characters')))
       } else if (value !== this.form.password) {
         callback(new Error(this.$t('wizard.Inconsistent input password twice!')))
       } else {

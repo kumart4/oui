@@ -9,6 +9,7 @@
     "Username": "用户名",
     "Password": "密码",
     "Confirmation": "确认",
+    "password length must be less then 64 characters" : "密码长度必须小于64个字符",
     "Please enter your password": "请输入密码",
     "Please enter your password again": "请再次输入密码",
     "Inconsistent input password twice!":  "两次密码输入不一致!",
