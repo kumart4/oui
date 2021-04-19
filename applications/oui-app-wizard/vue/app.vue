@@ -7,6 +7,26 @@
       <div class="center">
         <img src="/icons/REZRV-Logo.png"/>
       </div>
+        <div style="position: fixed; top: 60%; left: 3%; font-weight: bold; font-size: 15px;">
+          Download REZRV Apps from the links below:
+        </div>
+      <div style = "
+        top: 64%;
+        left: 3%;
+        height: 14%;
+        position: fixed;">
+          <img src="/icons/rezrvAndroidAppQRCode.png" width="20%"/>
+          <div style="position: fixed; left: 2%; font-weight: bold; font-size: 15px;">Rezrv Android App</div>
+        </div>
+
+        <div style = "
+        top: 64%;
+        left: 18%;
+        height: 14%;
+        position: fixed;">
+          <img src="/icons/rezrvIOSAppQRCode.png" width="20%"/>
+          <div style="position: fixed; left: 18%; font-weight: bold; font-size: 15px;">Rezrv iOS App</div>
+      </div>
     </div>
     <div class="steps-content">
       <a-card :title="$t(steps[current])">

@@ -28,6 +28,27 @@
         </a-form-model>
       </a-card>
     </a-spin>
+      <div style="position: fixed;  top: 69%; left: 39%; font-weight: bold; font-size: 15px;">
+        Download REZRV Apps from the links below:
+      </div>
+    </div>
+
+    <div style = " width: 100%;
+    top: 74%;
+    left: 35%;
+    height: 13%;
+    position: fixed;">
+      <img src="/icons/rezrvAndroidAppQRCode.png" width="7%"/>
+      <div style="position: fixed; left: 34%; font-weight: bold; font-size: 15px;">Rezrv Android App</div>
+    </div>
+
+    <div style = " width: 100%;
+    top: 74%;
+    left: 58%;
+    height: 13%;
+    position: fixed;">
+      <img src="/icons/rezrvIOSAppQRCode.png" width="7%"/>
+      <div style="position: fixed; left: 58%; font-weight: bold; font-size: 15px;">Rezrv iOS App</div>
     </div>
 
     <div style = " width: 100%;
