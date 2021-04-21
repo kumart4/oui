@@ -38,8 +38,8 @@
     left: 35%;
     height: 13%;
     position: fixed;">
-      <img src="/icons/rezrvAndroidAppQRCode.png" width="7%"/>
-      <div style="position: fixed; left: 34%; font-weight: bold; font-size: 15px;">Rezrv Android App</div>
+      <img src="/icons/rezrvAndroidAppQRCode.png" width="5%"/>
+      <div style="position: fixed; left: 34%; font-weight: bold; font-size: 10px;">Rezrv Android App</div>
     </div>
 
     <div style = " width: 100%;
@@ -47,8 +47,8 @@
     left: 58%;
     height: 13%;
     position: fixed;">
-      <img src="/icons/rezrvIOSAppQRCode.png" width="7%"/>
-      <div style="position: fixed; left: 58%; font-weight: bold; font-size: 15px;">Rezrv iOS App</div>
+      <img src="/icons/rezrvIOSAppQRCode.png" width="5%"/>
+      <div style="position: fixed; left: 58%; font-weight: bold; font-size: 10px;">Rezrv iOS App</div>
     </div>
 
     <div style = " width: 100%;
