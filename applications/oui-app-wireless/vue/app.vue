@@ -95,7 +95,7 @@ export default {
       }
     },
     loadCipher (self) {
-      let v = (this.$uci.get('network', self.sid, 'encryption') || '').split('+')
+      let v = (this.$uci.get('wireless', self.sid, 'cipher') || '').split('+')
 
       if (v.length < 2) { return 'auto' }
 
@@ -110,14 +110,14 @@ export default {
       return v
     },
     saveEncr (self) {
-      const cipher = this.$uci.get('network', self.sid, 'cipher')
+      const cipher = this.$uci.get('wireless', self.sid, 'cipher')
       let value = self.model
 
       if (cipher === 'tkip' || cipher === 'ccmp' || cipher === 'tkip+ccmp') {
         value = `${value}+${cipher}`
       }
 
-      this.$uci.set('network', self.sid, 'encryption', value)
+      this.$uci.set('wireless', self.sid, 'encryption', value)
     },
     saveCipher (self) {
       let encr = this.$uci.get(self.sid, 'encryption')
@@ -127,7 +127,7 @@ export default {
         encr = `${encr}+${value}`
       }
 
-      this.$uci.set('network', self.sid, 'encryption', encr)
+      this.$uci.set('wireless', self.sid, 'cipher', encr)
     }
   },
   created () {
