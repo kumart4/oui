@@ -145,6 +145,17 @@ export default {
     if (value.length >= 32) {
       return false
     } else {
+      if (value[0] === '!' || value[0] === '#' || value[0] === ';' || value[0] === ' ') {
+        return false
+      } else if (value[value.length - 1] === ' ') {
+        return false
+      } else {
+        for (var i = 0; i < value.length; i++) {
+          if (value[i] === '?' || value[i] === '\\' || value.charCodeAt(i) === 34 || value.charCodeAt(i) === 39 || value[i] === '$' || value[i] === '[' || value[i] === ']' || value[i] === '+') {
+            return false
+          }
+        }
+      }
       return true
     }
   },

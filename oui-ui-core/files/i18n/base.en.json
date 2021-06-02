@@ -64,7 +64,7 @@
     "min": "Cannot be less than {min}",
     "max": "Cannot be greater than {max}",
     "passwordValidator": "Passphrase length is either greater than 64 or less than 8 characters",
-    "ssidValidator": "SSID length is greater than 32 characters"
+    "ssidValidator" : "SSID cannot be greater than 32 and can not have this \\ \" ' $ [ ? ] + and cannot have this ! # ; at first"
   },
   "Back": "Back",
   "Next": "Next",

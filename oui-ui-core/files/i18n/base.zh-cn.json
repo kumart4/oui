@@ -64,7 +64,7 @@
     "min": "不能小于 {min}",
     "max": "不能大于 {max}",
     "passwordValidator": "密码长度大于64个字符或小于8个字符",
-    "ssidValidator": "SSID长度大于32个字符"
+    "ssidValidator": "SSID 不能大于 32 并且不能有这个 \\ \" ' $ [ ? ] + 并且不能有这个 ! # ; 起初"
   },
   "Back": "后退",
   "Next": "前进",
